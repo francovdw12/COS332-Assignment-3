@@ -114,41 +114,106 @@ public class CalculatorHTTPServer{
         }
 
 
-        private String generateCalculatorPage(String currentExpression){
+        private String generateCalculatorPage(String currentExpression) {
 
             StringBuilder html = new StringBuilder();
-
-            html.append("<html><body>");
-            html.append("<h1>Calculator</h1>");
-            html.append("<p>Expression: ").append(currentExpression).append("</p>");
-
-            List<String> calculatorButtons = List.of("1", "2", "3", "+", "4", "5", "6", "-", "7", "8", "9", "*", "0", "=", "/", "clear");
-
-            for(String button : calculatorButtons){
-
-                if(button.equals("/")){ //make sure that the program handles the '/' case correctly
-
-                    html.append("<a href=\"/%2F\">").append(button).append("</a> ");
-
-                } else{
-
-                    html.append("<a href=\"/").append(button).append("\">").append(button).append("</a> ");
-
+        
+            html.append("<html>");
+            html.append("<head>");
+            html.append("<meta charset=\"UTF-8\">");
+            html.append("<title>HTTP Calculator</title>");
+            html.append("<style>");
+            // Overall page styling
+            html.append("body { ");
+            html.append("  background-color: black; ");
+            html.append("  color: #FFAC1C; ");
+            html.append("  font-family: Arial, sans-serif; ");
+            html.append("  display: flex; ");
+            html.append("  flex-direction: column; ");
+            html.append("  align-items: center; ");
+            html.append("  justify-content: center; ");
+            html.append("  height: 100vh; ");
+            html.append("  margin: 0; ");
+            html.append("} ");
+            // Heading style
+            html.append("h1 { ");
+            html.append("  color: #FFAC1C; ");
+            html.append("  margin-bottom: 20px; ");
+            html.append("} ");
+            // Calculator container styling
+            html.append(".calculator { ");
+            html.append("  background-color: #FFAC1C; ");
+            html.append("  padding: 20px; ");
+            html.append("  border-radius: 10px; ");
+            html.append("  box-shadow: 0 4px 8px rgba(0,0,0,0.3); ");
+            html.append("  text-align: center; ");
+            html.append("} ");
+            // Display area styling (showing only the current expression)
+            html.append(".display { ");
+            html.append("  background-color: black; ");
+            html.append("  color: #FFAC1C; ");
+            html.append("  padding: 10px; ");
+            html.append("  margin-bottom: 20px; ");
+            html.append("  font-size: 24px; ");
+            html.append("  text-align: right; ");
+            html.append("  border: 2px solid #FFAC1C; ");
+            html.append("  border-radius: 5px; ");
+            html.append("  width: 300px; ");
+            html.append("  min-height: 40px; ");
+            html.append("} ");
+            // Grid container for buttons
+            html.append(".buttons { ");
+            html.append("  display: grid; ");
+            html.append("  grid-template-columns: repeat(4, 1fr); ");
+            html.append("  grid-gap: 10px; ");
+            html.append("} ");
+            // Styling for each button
+            html.append(".buttons a { ");
+            html.append("  display: block; ");
+            html.append("  text-decoration: none; ");
+            html.append("  background-color: black; ");
+            html.append("  color: #FFAC1C; ");
+            html.append("  font-size: 18px; ");
+            html.append("  width: 100%; ");
+            html.append("  height: 60px; ");
+            html.append("  line-height: 60px; ");
+            html.append("  text-align: center; ");
+            html.append("  border-radius: 5px; ");
+            html.append("} ");
+            html.append(".buttons a:hover { ");
+            html.append("  background-color: #333; ");
+            html.append("} ");
+            html.append("</style>");
+            html.append("</head>");
+            html.append("<body>");
+            html.append("<div class=\"calculator\">");
+            // New heading
+            html.append("<h1>HTTP Calculator</h1>");
+            // Display area without "Expression:" text
+            html.append("<div class=\"display\">" + currentExpression + "</div>");
+            html.append("<div class=\"buttons\">");
+        
+            List<String> calculatorButtons = List.of("1", "2", "3", "+", 
+                                                       "4", "5", "6", "-", 
+                                                       "7", "8", "9", "*", 
+                                                       "0", "=", "/", "clear");
+        
+            for (String button : calculatorButtons) {
+                if (button.equals("/")) { // Encode '/' correctly in URL
+                    html.append("<a href=\"/%2F\">" + button + "</a>");
+                } else {
+                    html.append("<a href=\"/" + button + "\">" + button + "</a>");
                 }
-
-                if(button.equals("+") || button.equals("-") || button.equals("*") || button.equals("/")){
-
-                    html.append("<br>");
-
-                }
-
             }
-
+        
+            html.append("</div>"); // close buttons grid
+            html.append("</div>"); // close calculator container
             html.append("</body></html>");
-
+        
             return html.toString();
-
         }
+        
+        
 
         private String evaluateExpression(String expr){
 
