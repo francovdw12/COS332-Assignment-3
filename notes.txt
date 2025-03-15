@@ -1,0 +1,33 @@
+HEAD request sends only the headers, without the response body. If HEAD request is not implemented separately, it will act exactly like a GET request.
+
+Making a HEAD request:
+curl -I http://100.86.117.88:8000
+
+Content:
+HTTP/1.1 200 OK
+Date: Thu, 13 Mar 2025 16:17:20 GMT
+Content-type: text/html; charset=UTF-8
+
+Making a GET request:
+curl -X GET http://127.0.0.1:8000
+
+Content:
+<html><body><h1>Calculator</h1><p>Expression: </p><a href="/1">1</a> <a href="/2">2</a> <a href="/3">3</a> <a href="/+">+</a> <br><a href="/4">4</a> <a href="/5">5</a> <a href="/6">6</a> <a href="/-">-</a> <br><a href="/7">7</a> <a href="/8">8</a> <a href="/9">9</a> <a href="/*">*</a> <br><a href="/0">0</a> <a href="/=">=</a> <a href="/%2F">/</a> <br><a href="/clear">clear</a> </body></html>
+
+
+Added features:
+When an expression result is shown, following up with a digit/number, would automatically start a new expression and remove the result of the previous expression. But, when you use and operator directly after 
+the previous expression result is shown, the previous expression result will form part of the current/new expression.
+
+
+In case address is already in use:
+francovdw@raspberrypi:~/Desktop/Projects/COS332 Assignment 2 $ sudo netstat -tulpn | grep :8000
+tcp6       0      0 :::23                   :::*                    LISTEN      1630/xinetd         
+francovdw@raspberrypi:~/Desktop/Projects/COS332 Assignment 2 $ sudo kill -9 1630
+
+if facing more issues:
+francovdw@raspberrypi:~/Desktop/Projects/COS332 Assignment 3 $ sudo kill -9 1630
+bash: sudo kill -9 1630: command not found
+francovdw@raspberrypi:~/Desktop/Projects/COS332 Assignment 3 $ which kill
+/usr/bin/kill
+francovdw@raspberrypi:~/Desktop/Projects/COS332 Assignment 3 $ sudo /bin/kill -9 1212
